@@ -1,0 +1,13 @@
+<resources>
+
+   <color name="background">#5D5D5D</color>
+   <color name="button">#5D5D5D</color>
+   <color name="textgrey">#B3B3B3</color>
+   <color name="textwhite">#fff</color>
+
+   <color name="disablebg">#999999</color>
+   <color name="disabletext">#CCCCCC</color>
+   <color name="btnstart">#39B54A</color>
+   <color name="btnstop">#E83F6C</color>
+   <color name="confirm">#00AEFF</color>
+</resources>

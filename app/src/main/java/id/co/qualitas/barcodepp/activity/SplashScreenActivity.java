@@ -15,6 +15,9 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.app.ActionBar;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.zltd.sdk.scanner.core.BuildConfig;
 
 public class SplashScreenActivity extends Activity {
 	private SessionManager session;
@@ -28,6 +31,9 @@ public class SplashScreenActivity extends Activity {
 		setContentView(R.layout.activity_splash_screen);
 		getActionBar().hide();
 		session = new SessionManager(getApplicationContext());
+		TextView txtVersion = findViewById(R.id.txtVersion);
+		String versionName = BuildConfig.VERSION_NAME;
+		txtVersion.setText("NPS PP Version " + versionName);
 		
 		if (session.isUrlEmpty()) {
 			Map<String, String> urlSession = session.getUrl();

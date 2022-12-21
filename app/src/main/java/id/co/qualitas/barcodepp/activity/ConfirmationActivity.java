@@ -156,7 +156,8 @@ public class ConfirmationActivity extends BaseActivity {
         if (pwoResponse.getProdType().equals("FG")) {
             flagQTY = true;
             lv1.setVisibility(View.GONE);
-            setButton(btnConfirm, "CONFIRM", R.drawable.btn_blue);
+//            setButton(btnConfirm, "CONFIRM", R.drawable.btn_blue);
+            setButton(btnConfirm, "STOP", R.drawable.btn_pink);
             if (pwoResponse.getListEmployee() != null && pwoResponse.getListEmployee().size() != 0) {
                 lv1.setVisibility(View.VISIBLE);
                 adapter = new EmployeeConfirmationBaseAdapter(this,
@@ -224,7 +225,8 @@ public class ConfirmationActivity extends BaseActivity {
                 if (flag == true) {
                     flag = false;
                     if (pwoResponse.getProdType().equals("FG")) {
-                        setButton(btnConfirm, "CONFIRM", R.drawable.btn_blue);
+//                        setButton(btnConfirm, "CONFIRM", R.drawable.btn_blue);
+                        setButton(btnConfirm, "STOP", R.drawable.btn_pink);
                     } else {
                         setButton(btnConfirm, "STOP", R.drawable.btn_pink);
                     }

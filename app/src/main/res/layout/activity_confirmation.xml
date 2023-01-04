@@ -68,13 +68,13 @@
                 android:id="@+id/imgPartial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/partial_disabled" />
+                android:src="@drawable/partial_enabled" />
 
             <ImageView
                 android:id="@+id/imgFull"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/full_enabled" />
+                android:src="@drawable/full_disabled" />
         </TableRow>
 
         <View

@@ -39,6 +39,8 @@ public class PWOResponse implements Serializable{
     private boolean isPartial;
     @SerializedName("prodType")
     private String prodType;
+	@SerializedName("orderType")
+	private String orderType;
     @SerializedName("idEmployee")
     private String idEmployee;
     @SerializedName("duration")
@@ -237,6 +239,15 @@ public class PWOResponse implements Serializable{
 	public void setProdType(String prodType) {
 		this.prodType = prodType;
 	}
+
+	public String getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
+	}
+
 	public String getIdEmployee() {
 		return idEmployee;
 	}

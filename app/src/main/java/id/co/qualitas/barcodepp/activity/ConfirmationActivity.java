@@ -66,7 +66,7 @@ public class ConfirmationActivity extends BaseActivity {
 
     private ImageView imgPartial, imgFull;
     private ImageButton imgUndo;
-    private boolean flag = false;
+    private boolean flag = true;
     private PWOResponse pwoResponse;
     private LinearLayout l1, l2, l3,l4;
     private Long timeElapsed, delayedTime = null;
@@ -146,6 +146,7 @@ public class ConfirmationActivity extends BaseActivity {
         String mDataPE = dataSessionPE.get(Constants.KEY_PE);
         PWOEmployee pwoEmployee = (PWOEmployee) Helper.stringToObject(mDataPE);
         pwoResponse = pwoEmployee.getPwoResponse();
+        pwoResponse.setPartial(true);
         l1 = (LinearLayout) findViewById(R.id.l1);
         l2 = (LinearLayout) findViewById(R.id.l2);
         l4 = (LinearLayout) findViewById(R.id.l4);
@@ -153,6 +154,7 @@ public class ConfirmationActivity extends BaseActivity {
         imgPartial = (ImageView) findViewById(R.id.imgPartial);
         Helper.setItemParam(Constants.PROD_TYPE,
                 pwoResponse.getProdType());
+
         if (pwoResponse.getProdType().equals("FG")) {
             flagQTY = true;
             lv1.setVisibility(View.GONE);
@@ -183,6 +185,11 @@ public class ConfirmationActivity extends BaseActivity {
             }
 
         }
+//        if(pwoResponse.getOrderType().equals("ZHBS") || pwoResponse.getOrderType().equals("ZVBS")){
+//            flagQTY = false;
+//            edtQTY.setVisibility(View.GONE);
+//            txtQty.setVisibility(View.GONE);
+//        }
         txtPWONumber.setText(pwoResponse.getPwoNo());
         txtPWODesc.setText(pwoResponse.getProductId().concat(" - ")
                 .concat(pwoResponse.getProductName()));
@@ -193,7 +200,7 @@ public class ConfirmationActivity extends BaseActivity {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                if (flag == false) {
+//                if (flag == false) {
                     flag = true;
                     if (pwoResponse.getProdType().equals("FG")) {
                         setButton(btnConfirm, "SAVE", R.drawable.btn_pink);
@@ -204,7 +211,7 @@ public class ConfirmationActivity extends BaseActivity {
                     setImage(imgPartial, R.drawable.partial_enabled);
                     setImage(imgFull, R.drawable.full_disabled);
                     pwoResponse.setPartial(flag);
-                }
+//                }
 //				else {
 //					flag = false;
 //					if (pwoResponse.getProdType().equals("FG")) {
@@ -222,7 +229,7 @@ public class ConfirmationActivity extends BaseActivity {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                if (flag == true) {
+//                if (flag == true) {
                     flag = false;
                     if (pwoResponse.getProdType().equals("FG")) {
 //                        setButton(btnConfirm, "CONFIRM", R.drawable.btn_blue);
@@ -233,7 +240,7 @@ public class ConfirmationActivity extends BaseActivity {
                     setImage(imgPartial, R.drawable.partial_disabled);
                     setImage(imgFull, R.drawable.full_enabled);
                     pwoResponse.setPartial(flag);
-                }
+//                }
 //				if (flag == false) {
 //					flag = true;
 //					if (pwoResponse.getProdType().equals("FG")) {
@@ -527,6 +534,7 @@ public class ConfirmationActivity extends BaseActivity {
         }
     }
 
+    @SuppressLint("LongLogTag")
     public void onDestroy() {
         Log.d(TAG, "onDestroy");
         super.onDestroy();
@@ -561,6 +569,7 @@ public class ConfirmationActivity extends BaseActivity {
         }
     };
 
+    @SuppressLint("LongLogTag")
     @Override
     public void onDecoderResultChanage(String result, String time) {
         super.onDecoderResultChanage(result, time);

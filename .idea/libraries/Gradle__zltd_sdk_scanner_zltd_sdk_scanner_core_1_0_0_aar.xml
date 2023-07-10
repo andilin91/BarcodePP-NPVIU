@@ -1,16 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: zltd.sdk.scanner:zltd-sdk-scanner-core:1.0.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3c7a084d3ffb040eb4a7bb55ea9f4401/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3c7a084d3ffb040eb4a7bb55ea9f4401/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3c7a084d3ffb040eb4a7bb55ea9f4401/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d05d3a0ed1d0e9d9df4bbc9f61d68ccc/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d05d3a0ed1d0e9d9df4bbc9f61d68ccc/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d05d3a0ed1d0e9d9df4bbc9f61d68ccc/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3c7a084d3ffb040eb4a7bb55ea9f4401/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/zltd.sdk.scanner/zltd-sdk-scanner-core/1.0.0/3c3b8d3b3215874fc83d70afb55f9b8aa06d065e/zltd-sdk-scanner-core-1.0.0-sources.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

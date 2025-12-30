@@ -1,5 +1,7 @@
 package id.co.qualitas.barcodepp.activity;
 
+import static id.co.qualitas.barcodepp.activity.TestBaseActivity.lightControlHandler;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -18,10 +20,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.zltd.decoder.DecoderManager;
-
 import id.co.qualitas.barcodepp.R;
 import id.co.qualitas.barcodepp.constants.Constants;
+import id.co.qualitas.barcodepp.decoder.DecoderManager;
 
 public class BaseActivity extends Activity implements DecoderManager.IDecoderStatusListener{
     private String statusString = "";
@@ -46,6 +47,9 @@ public class BaseActivity extends Activity implements DecoderManager.IDecoderSta
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     protected int scanCase = 0;
+
+    private static final int OPENLIGHT = 1;
+    private static final int CLOSELIGHT = 2;
 
     public void init() {
         context = this.getApplicationContext();
@@ -125,10 +129,10 @@ public class BaseActivity extends Activity implements DecoderManager.IDecoderSta
         mUtils.release();
         Log.d(TAG, "onPause this=" + this);
         isOnResume = false;
-        mDecoderMgr.removeDecoderStatusListener(this);
-        mDecoderMgr.stopDecode();
-        //lightControlHandler.sendEmptyMessageDelayed(CLOSELIGHT, 1);
-        mDecoderMgr.disconnectDecoderSRV();
+//        mDecoderMgr.removeDecoderStatusListener(this);
+//        mDecoderMgr.stopDecode();
+//        //lightControlHandler.sendEmptyMessageDelayed(CLOSELIGHT, 1);
+//        mDecoderMgr.disconnectDecoderSRV();
     }
 
     @Override
@@ -140,7 +144,7 @@ public class BaseActivity extends Activity implements DecoderManager.IDecoderSta
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         preferences = getSharedPreferences("settings", MODE_PRIVATE);
         mDecoderMgr = DecoderManager.getInstance();
-        mDecoderMgr.setDataTransferType(com.zltd.decoder.Constants.TRANSFER_BY_API);
+        mDecoderMgr.setDataTransferType(id.co.qualitas.barcodepp.decoder.Constants.TRANSFER_BY_API);
     }
 
     @Override
@@ -153,7 +157,7 @@ public class BaseActivity extends Activity implements DecoderManager.IDecoderSta
         isOnResume = true;
         scanCase = 0;
         int res = mDecoderMgr.connectDecoderSRV();
-        if(res == com.zltd.decoder.Constants.RETURN_CAMERA_CONN_ERR){
+        if(res == id.co.qualitas.barcodepp.decoder.Constants.RETURN_CAMERA_CONN_ERR){
             new AlertDialog.Builder(this)
                     .setTitle(R.string.app_name)
                     .setIcon(android.R.drawable.ic_dialog_info)
@@ -168,8 +172,8 @@ public class BaseActivity extends Activity implements DecoderManager.IDecoderSta
                     .show();
         }
         mDecoderMgr.addDecoderStatusListener(this);
-        //lightControlHandler.removeMessages(CLOSELIGHT);
-        //lightControlHandler.sendEmptyMessage(OPENLIGHT);
+        lightControlHandler.removeMessages(CLOSELIGHT);
+        lightControlHandler.sendEmptyMessage(OPENLIGHT);
     }
 
     protected void closeSelf() {

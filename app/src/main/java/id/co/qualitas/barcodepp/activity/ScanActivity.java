@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 
 import com.google.zxing.Result;
 
@@ -14,6 +13,8 @@ import id.co.qualitas.barcodepp.helper.Helper;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
+
+import androidx.core.content.ContextCompat;
 
 public class ScanActivity extends BaseActivity implements ZXingScannerView.ResultHandler {
     private static final int REQUEST_CAMERA = 1;

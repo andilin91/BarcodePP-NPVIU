@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import id.co.qualitas.barcodepp.constants.Constants;
 import id.co.qualitas.barcodepp.helper.Helper;

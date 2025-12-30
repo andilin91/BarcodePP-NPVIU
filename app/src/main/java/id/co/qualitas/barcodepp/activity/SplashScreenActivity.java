@@ -2,6 +2,7 @@ package id.co.qualitas.barcodepp.activity;
 
 import java.util.Map;
 
+import id.co.qualitas.barcodepp.BuildConfig;
 import id.co.qualitas.barcodepp.R;
 import id.co.qualitas.barcodepp.constants.Constants;
 import id.co.qualitas.barcodepp.helper.Helper;
@@ -17,7 +18,6 @@ import android.app.ActionBar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.zltd.sdk.scanner.core.BuildConfig;
 
 public class SplashScreenActivity extends Activity {
 	private SessionManager session;

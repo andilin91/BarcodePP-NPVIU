@@ -4,10 +4,10 @@ public class Constants {
     public static final String TRANSFER_ORDER_LIST = "to_list";
     public static final String TRANSFER_ORDER = "to";
 //    public static final String URL = "http://132.0.17.56:8181/api/v1/NPSorder/";
-//    public static final String URL = "http://132.0.74.60:8181/api/v1/NPSorder/";
+    public static final String URL = "http://192.168.100.14:8181/api/v1/NPSorder/";
 //    public static final String URL = "http://135.0.74.60:8080/api/v1/NPSorder/";
 //    public static final String URL = "http://192.168.1.19:8080/api/v1/NPSorder/";
-    public static final String URL = "http://166.0.0.150:8181/api/v1/NPSorder/";
+//    public static final String URL = "http://166.0.0.150:8181/api/v1/NPSorder/";
 //	public static final String URL = "http://166.0.0.150:8080/api/v1/NPSorder/";
     public static final String PREF_NAME = "Qualitas";
     public static final String PREF_NAME_URL = "PREF_URL";

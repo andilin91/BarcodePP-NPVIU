@@ -146,11 +146,14 @@
 
             <EditText
                 android:id="@+id/edtResource"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:ems="5"
                 android:gravity="center"
+                android:drawableEnd="@drawable/ic_scan"
+                android:drawablePadding="8dp"
                 android:maxLines="1"
+                android:inputType="text"
                 android:imeOptions="actionDone"
                 android:textColor="@color/textwhite" />
         </LinearLayout>

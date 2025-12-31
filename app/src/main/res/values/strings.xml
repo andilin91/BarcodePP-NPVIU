@@ -16,6 +16,7 @@
 	<string name="action_font">Font size</string>
 	<string name="testing_scan">Testing Scan</string>
     <string name="scan_barcode">SCAN</string>
+    <string name="input_barcode">Scan or Input PWO Number/Employee ID</string>
 
 
     <!--<string name="app_name">Broadcast Style Demo</string>-->

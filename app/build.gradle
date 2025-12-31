@@ -1,3 +1,64 @@
+apply plugin: 'com.android.application'
+android {
+    compileSdk 34
+    namespace 'id.co.qualitas.barcodepp'
+
+    defaultConfig {
+        applicationId "id.co.qualitas.barcodepp"
+        minSdkVersion 26
+        targetSdk 34
+        versionCode 1
+        versionName "2.4.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            crunchPngs false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    sourceSets {
+        main {
+            assets {
+                srcDirs 'src/main/assets'
+            }
+        }
+    }
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/license.txt', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/notice.txt', 'META-INF/ASL2.0']
+        }
+    }
+    lint {
+        checkReleaseBuilds false
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
+    implementation 'me.dm7.barcodescanner:zxing:1.9.8'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.google.android.material:material:1.6.1'
+//    implementation 'zltd.sdk.scanner:zltd-sdk-scanner-core:1.0.0'
+}
+
+
 //apply plugin: 'com.android.application'
 //android {
 //    compileSdkVersion 'Zebra Technologies Corp:EMDK APIs:26'
@@ -38,57 +99,57 @@
 //    implementation 'com.android.support:cardview-v7:23.4.0'
 //}
 
-apply plugin: 'com.android.application'
-android {
-//    compileSdkVersion 'Zebra Technologies Corp:EMDK APIs:26'
-    compileSdkVersion 28
-
-    defaultConfig {
-        applicationId "id.co.qualitas.barcodepp"
-        minSdkVersion 16
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0.3"
-//        compileOptions {
-//            sourceCompatibility JavaVersion.VERSION_1_8
-//            targetCompatibility JavaVersion.VERSION_1_8
+//apply plugin: 'com.android.application'
+//android {
+////    compileSdkVersion 'Zebra Technologies Corp:EMDK APIs:26'
+//    compileSdkVersion 28
+//
+//    defaultConfig {
+//        applicationId "id.co.qualitas.barcodepp"
+//        minSdkVersion 16
+//        targetSdkVersion 34
+//        versionCode 1
+//        versionName "1.0.3"
+////        compileOptions {
+////            sourceCompatibility JavaVersion.VERSION_1_8
+////            targetCompatibility JavaVersion.VERSION_1_8
+////        }
+//    }
+//
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
 //        }
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-        }
-    }
-
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/ASL2.0'
-    }
-}
-
-allprojects {
-    repositories {
-        jcenter()
-        maven { url "https://jitpack.io" }
-    }
-}
-
-dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
-    implementation 'me.dm7.barcodescanner:zxing:1.9.8'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
-//    implementation 'zltd.sdk.scanner:zltd-sdk-scanner-core:1.0.0'
-}
+//    }
+//
+//    packagingOptions {
+//        exclude 'META-INF/DEPENDENCIES'
+//        exclude 'META-INF/LICENSE'
+//        exclude 'META-INF/LICENSE.txt'
+//        exclude 'META-INF/license.txt'
+//        exclude 'META-INF/NOTICE'
+//        exclude 'META-INF/NOTICE.txt'
+//        exclude 'META-INF/notice.txt'
+//        exclude 'META-INF/ASL2.0'
+//    }
+//}
+//
+//allprojects {
+//    repositories {
+//        jcenter()
+//        maven { url "https://jitpack.io" }
+//    }
+//}
+//
+//dependencies {
+//    implementation fileTree(include: ['*.jar'], dir: 'libs')
+//    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+//    implementation 'com.android.support:appcompat-v7:28.0.0'
+//    implementation 'com.google.code.gson:gson:2.8.2'
+//    implementation 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
+//    implementation 'me.dm7.barcodescanner:zxing:1.9.8'
+//    implementation 'com.android.support:recyclerview-v7:28.0.0'
+//    implementation 'com.android.support:cardview-v7:28.0.0'
+////    implementation 'zltd.sdk.scanner:zltd-sdk-scanner-core:1.0.0'
+//}

@@ -104,6 +104,7 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Helper.removeItemParam(Constants.RESULT_BARCODE);
         init();
         ab = getActionBar();
         initialize();
@@ -193,7 +194,10 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 flag = 1;
-                showDialogEmployeeID();
+                Helper.setItemParam(Constants.SCAN, "2");
+                Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
+                startActivity(intent);
+//                showDialogEmployeeID();
             }
         });
 
@@ -201,7 +205,10 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 flag = 2;
-                showDialogPwoNumber();
+                Helper.setItemParam(Constants.SCAN, "1");
+                Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
+                startActivity(intent);
+//                showDialogPwoNumber();
             }
         });
     }
@@ -223,14 +230,16 @@ public class HomeActivity extends BaseActivity {
     public void setSpinnerData() {
         ArrayList<String> spinnerArray = new ArrayList<>(20);
         if(flagPwo == true) {
+            spinnerOperation.setVisibility(View.VISIBLE);
             spinnerArray.add(0, "Choose Operation Number");
             for(int i=0;i<pwoResponse.getListOperation().size();i++){
                 spinnerArray.add(i+1, pwoResponse.getListOperation().get(i).getOperation() + " - " + pwoResponse.getListOperation().get(i).getStatus());
             }
             spinnerOperation.setEnabled(true);
         }else{
-            spinnerArray.add(0, "please scan PWO Number first");
-            spinnerOperation.setEnabled(false);
+//            spinnerArray.add(0, "Scan the PWO Number to display the Operation Number.");
+//            spinnerOperation.setEnabled(false);
+            spinnerOperation.setVisibility(View.GONE);
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, spinnerArray);
@@ -879,7 +888,7 @@ public class HomeActivity extends BaseActivity {
 //        BarcodeScanner.getInstance(this);
 //        BarcodeScanner.registerUIobject(this);
 //        Helper.setRequestUrl(false);
-        initUI();
+//        initUI();
         if (Helper.getItemParam(Constants.RESULT_BARCODE) != null) {
             result = Helper.getItemParam(Constants.RESULT_BARCODE).toString();
             Helper.removeItemParam(Constants.RESULT_BARCODE);
@@ -905,11 +914,12 @@ public class HomeActivity extends BaseActivity {
                     Toast.makeText(getApplicationContext(), "please select PWO Number or Employee ID first", Toast.LENGTH_SHORT).show();
                 }else if (flag == 1) {
                     employeeId = scanData;
-                    edtTxt.setText(employeeId);
+//                    edtTxt.setText(employeeId);
+                    getEmployeeID();
                 } else{
                     pwoNumber = scanData;
-                    edtTxt.setText(pwoNumber);
-//                    getPwoNo();
+//                    edtTxt.setText(pwoNumber);
+                    getPwoNo();
                 }
             } else {
                 Toast.makeText(getApplicationContext(),Constants.BARCODE_ERROR,Toast.LENGTH_SHORT).show();
@@ -920,101 +930,101 @@ public class HomeActivity extends BaseActivity {
     }
 
     //XuXin
-    private void initUI() {
-//        mContinousScanButton.setChecked(false);
-//        mSingleScanButton.setEnabled(true);
-        switch (mDecoderMgr.getScanMode()) {
-            case com.zltd.decoder.Constants.SINGLE_SHOOT_MODE:
-//                mSingleScanButton.setEnabled(true);
-//                mContinousScanButton.setEnabled(false);
-//                //autoTestButton.setEnabled(true);
-//                mScanTotalTextView.setVisibility(View.GONE);
-                scanMode = com.zltd.decoder.Constants.SINGLE_SHOOT_MODE;
-                break;
-            case com.zltd.decoder.Constants.CONTINUOUS_SHOOT_MODE:
-//                mSingleScanButton.setEnabled(false);
-//                mContinousScanButton.setEnabled(true);
-//                //autoTestButton.setEnabled(false);
-//                mScanTotalTextView.setVisibility(View.VISIBLE);
-//                scanMode = com.zltd.decoder.Constants.CONTINUOUS_SHOOT_MODE;
-                break;
-            case com.zltd.decoder.Constants.HOLD_SHOOT_MODE:
-//                mSingleScanButton.setEnabled(false);
-//                mContinousScanButton.setEnabled(false);
-//                //autoTestButton.setEnabled(false);
-//                mScanTotalTextView.setVisibility(View.GONE);
-//                scanMode = com.zltd.decoder.Constants.HOLD_SHOOT_MODE;
-                break;
+//    private void initUI() {
+////        mContinousScanButton.setChecked(false);
+////        mSingleScanButton.setEnabled(true);
+//        switch (mDecoderMgr.getScanMode()) {
+//            case com.zltd.decoder.Constants.SINGLE_SHOOT_MODE:
+////                mSingleScanButton.setEnabled(true);
+////                mContinousScanButton.setEnabled(false);
+////                //autoTestButton.setEnabled(true);
+////                mScanTotalTextView.setVisibility(View.GONE);
+//                scanMode = com.zltd.decoder.Constants.SINGLE_SHOOT_MODE;
+//                break;
+//            case com.zltd.decoder.Constants.CONTINUOUS_SHOOT_MODE:
+////                mSingleScanButton.setEnabled(false);
+////                mContinousScanButton.setEnabled(true);
+////                //autoTestButton.setEnabled(false);
+////                mScanTotalTextView.setVisibility(View.VISIBLE);
+////                scanMode = com.zltd.decoder.Constants.CONTINUOUS_SHOOT_MODE;
+//                break;
+//            case com.zltd.decoder.Constants.HOLD_SHOOT_MODE:
+////                mSingleScanButton.setEnabled(false);
+////                mContinousScanButton.setEnabled(false);
+////                //autoTestButton.setEnabled(false);
+////                mScanTotalTextView.setVisibility(View.GONE);
+////                scanMode = com.zltd.decoder.Constants.HOLD_SHOOT_MODE;
+//                break;
+//
+//            default:
+//                break;
+//        }
+//    }
+//
+//    public void onDestroy() {
+//        Log.d(TAG, "onDestroy");
+//        super.onDestroy();
+//        if (mDecoderMgr != null) {
+//            mDecoderMgr.enableLight(com.zltd.decoder.Constants.FLASH_LIGHT, false);
+//            mDecoderMgr.enableLight(com.zltd.decoder.Constants.FLOOD_LIGHT, false);
+//            mDecoderMgr.enableLight(com.zltd.decoder.Constants.LOCATION_LIGHT, false);
+//        }
+//    }
+//
+//    private final Handler mHandler = new Handler() {
+//        public void handleMessage(Message msg) {
+//            switch (msg.what){
+//                case 0:
+//                    String decodeResult;
+//                    String decodeTime;
+//                    HashMap<String, String> result = (HashMap<String, String>) msg.obj;
+//                    String[] strs = result.values().toArray(new String[0]);
+//                    setDataScan(strs[0]);
+//                    break;
+//                case 1:
+//                    Toast.makeText(HomeActivity.this, R.string.save_success, Toast.LENGTH_SHORT).show();
+////                    enableSaveFile = true;
+//                    break;
+//                case 2:
+//                    Toast.makeText(HomeActivity.this, R.string.save_fail, Toast.LENGTH_SHORT).show();
+////                    enableSaveFile = true;
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    };
 
-            default:
-                break;
-        }
-    }
-
-    public void onDestroy() {
-        Log.d(TAG, "onDestroy");
-        super.onDestroy();
-        if (mDecoderMgr != null) {
-            mDecoderMgr.enableLight(com.zltd.decoder.Constants.FLASH_LIGHT, false);
-            mDecoderMgr.enableLight(com.zltd.decoder.Constants.FLOOD_LIGHT, false);
-            mDecoderMgr.enableLight(com.zltd.decoder.Constants.LOCATION_LIGHT, false);
-        }
-    }
-
-    private final Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case 0:
-                    String decodeResult;
-                    String decodeTime;
-                    HashMap<String, String> result = (HashMap<String, String>) msg.obj;
-                    String[] strs = result.values().toArray(new String[0]);
-                    setDataScan(strs[0]);
-                    break;
-                case 1:
-                    Toast.makeText(HomeActivity.this, R.string.save_success, Toast.LENGTH_SHORT).show();
-//                    enableSaveFile = true;
-                    break;
-                case 2:
-                    Toast.makeText(HomeActivity.this, R.string.save_fail, Toast.LENGTH_SHORT).show();
-//                    enableSaveFile = true;
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
-    @Override
-    public void onDecoderResultChanage(String result, String time) {
-        super.onDecoderResultChanage(result, time);
-        if(isOnResume){
-            Log.d(TAG, "onDecoderResultChanage decodeTime=" + time
-                    + " decodeResult " + result);
-            HashMap<String, String> hResult = new HashMap<String, String>();
-            hResult.put("decodeTime", time);
-            hResult.put("decodeResult", result);
-            switch (scanMode) {
-                case com.zltd.decoder.Constants.SINGLE_SHOOT_MODE:
-                    mHandler.obtainMessage(0, hResult).sendToTarget();
-                    break;
-                case com.zltd.decoder.Constants.CONTINUOUS_SHOOT_MODE:
-//                    if(scanCase == STARTCONTINUESHOOT){
-//                        ScanTotalNum++;
-//                        mHandler.obtainMessage(0, hResult).sendToTarget();
-//                    }
-                    break;
-                case com.zltd.decoder.Constants.HOLD_SHOOT_MODE:
-//                    if(!isScanTimeOut())
-//                    {
-//                        mHandler.obtainMessage(0, hResult).sendToTarget();
-//                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
+//    @Override
+//    public void onDecoderResultChanage(String result, String time) {
+//        super.onDecoderResultChanage(result, time);
+//        if(isOnResume){
+//            Log.d(TAG, "onDecoderResultChanage decodeTime=" + time
+//                    + " decodeResult " + result);
+//            HashMap<String, String> hResult = new HashMap<String, String>();
+//            hResult.put("decodeTime", time);
+//            hResult.put("decodeResult", result);
+//            switch (scanMode) {
+//                case com.zltd.decoder.Constants.SINGLE_SHOOT_MODE:
+//                    mHandler.obtainMessage(0, hResult).sendToTarget();
+//                    break;
+//                case com.zltd.decoder.Constants.CONTINUOUS_SHOOT_MODE:
+////                    if(scanCase == STARTCONTINUESHOOT){
+////                        ScanTotalNum++;
+////                        mHandler.obtainMessage(0, hResult).sendToTarget();
+////                    }
+//                    break;
+//                case com.zltd.decoder.Constants.HOLD_SHOOT_MODE:
+////                    if(!isScanTimeOut())
+////                    {
+////                        mHandler.obtainMessage(0, hResult).sendToTarget();
+////                    }
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    }
 //    @Override
 //    public boolean onKeyDown(int keyCode, KeyEvent event) {
 //        Log.d(TAG, "onKeyDown keyCode = " + keyCode + " repeatCount = " + event.getRepeatCount());

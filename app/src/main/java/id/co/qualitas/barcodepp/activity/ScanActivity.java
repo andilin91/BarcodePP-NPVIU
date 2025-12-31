@@ -1,15 +1,31 @@
 package id.co.qualitas.barcodepp.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.zxing.Result;
 
+import id.co.qualitas.barcodepp.R;
 import id.co.qualitas.barcodepp.constants.Constants;
 import id.co.qualitas.barcodepp.helper.Helper;
+import me.dm7.barcodescanner.core.IViewFinder;
+import me.dm7.barcodescanner.core.ViewFinderView;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
@@ -19,12 +35,16 @@ import androidx.core.content.ContextCompat;
 public class ScanActivity extends BaseActivity implements ZXingScannerView.ResultHandler {
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView scannerView;
+    private ImageView btnBack;
+    private Button btnOk;
+    private EditText doId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        scannerView = new ZXingScannerView(this);
-        setContentView(scannerView);
+        setContentView(R.layout.activity_camera);
+//        scannerView = new ZXingScannerView(this);
+//        setContentView(scannerView);
         init();
 
 
@@ -35,6 +55,39 @@ public class ScanActivity extends BaseActivity implements ZXingScannerView.Resul
                 requestPermissions();
             }
         }
+        initialize();
+    }
+
+    private void initialize() {
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+        doId = findViewById(R.id.customer_name);
+        btnOk = findViewById(R.id.btnOk);
+        btnOk.setOnClickListener(v -> {
+
+            String doIdTemp = doId.getText().toString();
+            if (doIdTemp.isEmpty()) {
+                Toast.makeText(getApplicationContext(), getString(R.string.scan_barcode), Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                Helper.setItemParam(Constants.RESULT_BARCODE, doIdTemp);
+                onBackPressed();
+            }
+        });
+        ViewGroup contentFrame = findViewById(R.id.content_frame);
+
+        scannerView = new ZXingScannerView(this) {
+            @Override
+            protected IViewFinder createViewFinderView(Context context) {
+                return new CustomViewFinderView(context);
+            }
+        };
+        contentFrame.addView(scannerView);
     }
 
     private boolean checkPermission() {
@@ -125,5 +178,51 @@ public class ScanActivity extends BaseActivity implements ZXingScannerView.Resul
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 //        startActivity(intent);
         onBackPressed();
+    }
+
+    private static class CustomViewFinderView extends ViewFinderView {
+        public static final String TRADE_MARK_TEXT = "Scanning...";
+        public static final int TRADE_MARK_TEXT_SIZE_SP = 20;
+        public final Paint PAINT = new Paint();
+
+        public CustomViewFinderView(Context context) {
+            super(context);
+            init();
+        }
+
+        public CustomViewFinderView(Context context, AttributeSet attrs) {
+            super(context, attrs);
+            init();
+        }
+
+        private void init() {
+            PAINT.setColor(Color.WHITE);
+            PAINT.setAntiAlias(true);
+            float textPixelSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+                    TRADE_MARK_TEXT_SIZE_SP, getResources().getDisplayMetrics());
+            PAINT.setTextSize(textPixelSize);
+            setSquareViewFinder(true);
+        }
+
+        @Override
+        public void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+            drawTradeMark(canvas);
+        }
+
+        private void drawTradeMark(Canvas canvas) {
+            Rect framingRect = getFramingRect();
+            float tradeMarkTop;
+            float tradeMarkLeft;
+            if (framingRect != null) {
+                tradeMarkTop = framingRect.bottom + PAINT.getTextSize() + 10;
+                tradeMarkLeft = framingRect.left;
+            } else {
+                tradeMarkTop = 10;
+                tradeMarkLeft = canvas.getHeight() - PAINT.getTextSize() - 10;
+            }
+            canvas.drawText(TRADE_MARK_TEXT, tradeMarkLeft, tradeMarkTop, PAINT);
+        }
+
     }
 }

@@ -97,6 +97,7 @@ public class ConfirmationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmation);
         session = new SessionManager(getApplicationContext());
+        Helper.removeItemParam(Constants.RESULT_BARCODE);
         init();
         initialize();
     }
@@ -116,7 +117,7 @@ public class ConfirmationActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initUI();
+//        initUI();
         if (Helper.getItemParam(Constants.RESULT_BARCODE) != null) {
             result = Helper.getItemParam(Constants.RESULT_BARCODE).toString();
             Helper.removeItemParam(Constants.RESULT_BARCODE);
@@ -124,6 +125,7 @@ public class ConfirmationActivity extends BaseActivity {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initialize() {
         // TODO Auto-generated method stub
         ab = getActionBar();
@@ -324,6 +326,18 @@ public class ConfirmationActivity extends BaseActivity {
                 return false;
             }
         });
+        edtResource.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                int drawableEnd = 2; // index for drawableEnd
+                if (event.getRawX() >= (edtResource.getRight()
+                        - edtResource.getCompoundDrawables()[drawableEnd].getBounds().width())) {
+                    Intent intent = new Intent(getApplicationContext(), ScanActivity.class);
+                    startActivity(intent); // launch barcode scanner
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     public static void hideKeyboardFrom(Context context, View view) {
@@ -502,103 +516,103 @@ public class ConfirmationActivity extends BaseActivity {
 
 
     //XuXin
-    private void initUI() {
-//        mContinousScanButton.setChecked(false);
-//        mSingleScanButton.setEnabled(true);
-        switch (mDecoderMgr.getScanMode()) {
-            case com.zltd.decoder.Constants.SINGLE_SHOOT_MODE:
-//                mSingleScanButton.setEnabled(true);
-//                mContinousScanButton.setEnabled(false);
-//                //autoTestButton.setEnabled(true);
-//                mScanTotalTextView.setVisibility(View.GONE);
-                scanMode = com.zltd.decoder.Constants.SINGLE_SHOOT_MODE;
-                break;
-            case com.zltd.decoder.Constants.CONTINUOUS_SHOOT_MODE:
-//                mSingleScanButton.setEnabled(false);
-//                mContinousScanButton.setEnabled(true);
-//                //autoTestButton.setEnabled(false);
-//                mScanTotalTextView.setVisibility(View.VISIBLE);
-//                scanMode = com.zltd.decoder.Constants.CONTINUOUS_SHOOT_MODE;
-                break;
-            case com.zltd.decoder.Constants.HOLD_SHOOT_MODE:
-//                mSingleScanButton.setEnabled(false);
-//                mContinousScanButton.setEnabled(false);
-//                //autoTestButton.setEnabled(false);
-//                mScanTotalTextView.setVisibility(View.GONE);
-//                scanMode = com.zltd.decoder.Constants.HOLD_SHOOT_MODE;
-                break;
+//    private void initUI() {
+////        mContinousScanButton.setChecked(false);
+////        mSingleScanButton.setEnabled(true);
+//        switch (mDecoderMgr.getScanMode()) {
+//            case com.zltd.decoder.Constants.SINGLE_SHOOT_MODE:
+////                mSingleScanButton.setEnabled(true);
+////                mContinousScanButton.setEnabled(false);
+////                //autoTestButton.setEnabled(true);
+////                mScanTotalTextView.setVisibility(View.GONE);
+//                scanMode = com.zltd.decoder.Constants.SINGLE_SHOOT_MODE;
+//                break;
+//            case com.zltd.decoder.Constants.CONTINUOUS_SHOOT_MODE:
+////                mSingleScanButton.setEnabled(false);
+////                mContinousScanButton.setEnabled(true);
+////                //autoTestButton.setEnabled(false);
+////                mScanTotalTextView.setVisibility(View.VISIBLE);
+////                scanMode = com.zltd.decoder.Constants.CONTINUOUS_SHOOT_MODE;
+//                break;
+//            case com.zltd.decoder.Constants.HOLD_SHOOT_MODE:
+////                mSingleScanButton.setEnabled(false);
+////                mContinousScanButton.setEnabled(false);
+////                //autoTestButton.setEnabled(false);
+////                mScanTotalTextView.setVisibility(View.GONE);
+////                scanMode = com.zltd.decoder.Constants.HOLD_SHOOT_MODE;
+//                break;
+//
+//            default:
+//                break;
+//        }
+//    }
 
-            default:
-                break;
-        }
-    }
+//    @SuppressLint("LongLogTag")
+//    public void onDestroy() {
+//        Log.d(TAG, "onDestroy");
+//        super.onDestroy();
+//        if (mDecoderMgr != null) {
+//            mDecoderMgr.enableLight(com.zltd.decoder.Constants.FLASH_LIGHT, false);
+//            mDecoderMgr.enableLight(com.zltd.decoder.Constants.FLOOD_LIGHT, false);
+//            mDecoderMgr.enableLight(com.zltd.decoder.Constants.LOCATION_LIGHT, false);
+//        }
+//    }
 
-    @SuppressLint("LongLogTag")
-    public void onDestroy() {
-        Log.d(TAG, "onDestroy");
-        super.onDestroy();
-        if (mDecoderMgr != null) {
-            mDecoderMgr.enableLight(com.zltd.decoder.Constants.FLASH_LIGHT, false);
-            mDecoderMgr.enableLight(com.zltd.decoder.Constants.FLOOD_LIGHT, false);
-            mDecoderMgr.enableLight(com.zltd.decoder.Constants.LOCATION_LIGHT, false);
-        }
-    }
+//    private final Handler mHandler = new Handler() {
+//        public void handleMessage(Message msg) {
+//            switch (msg.what){
+//                case 0:
+//                    String decodeResult;
+//                    String decodeTime;
+//                    HashMap<String, String> result = (HashMap<String, String>) msg.obj;
+//                    String[] strs = result.values().toArray(new String[0]);
+//                    setDataScan(strs[0]);
+//                    break;
+//                case 1:
+//                    Toast.makeText(ConfirmationActivity.this, R.string.save_success, Toast.LENGTH_SHORT).show();
+////                    enableSaveFile = true;
+//                    break;
+//                case 2:
+//                    Toast.makeText(ConfirmationActivity.this, R.string.save_fail, Toast.LENGTH_SHORT).show();
+////                    enableSaveFile = true;
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    };
 
-    private final Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case 0:
-                    String decodeResult;
-                    String decodeTime;
-                    HashMap<String, String> result = (HashMap<String, String>) msg.obj;
-                    String[] strs = result.values().toArray(new String[0]);
-                    setDataScan(strs[0]);
-                    break;
-                case 1:
-                    Toast.makeText(ConfirmationActivity.this, R.string.save_success, Toast.LENGTH_SHORT).show();
-//                    enableSaveFile = true;
-                    break;
-                case 2:
-                    Toast.makeText(ConfirmationActivity.this, R.string.save_fail, Toast.LENGTH_SHORT).show();
-//                    enableSaveFile = true;
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
-    @SuppressLint("LongLogTag")
-    @Override
-    public void onDecoderResultChanage(String result, String time) {
-        super.onDecoderResultChanage(result, time);
-        if(isOnResume){
-            Log.d(TAG, "onDecoderResultChanage decodeTime=" + time
-                    + " decodeResult " + result);
-            HashMap<String, String> hResult = new HashMap<String, String>();
-            hResult.put("decodeTime", time);
-            hResult.put("decodeResult", result);
-            switch (scanMode) {
-                case com.zltd.decoder.Constants.SINGLE_SHOOT_MODE:
-                    mHandler.obtainMessage(0, hResult).sendToTarget();
-                    break;
-                case com.zltd.decoder.Constants.CONTINUOUS_SHOOT_MODE:
-//                    if(scanCase == STARTCONTINUESHOOT){
-//                        ScanTotalNum++;
-//                        mHandler.obtainMessage(0, hResult).sendToTarget();
-//                    }
-                    break;
-                case com.zltd.decoder.Constants.HOLD_SHOOT_MODE:
-//                    if(!isScanTimeOut())
-//                    {
-//                        mHandler.obtainMessage(0, hResult).sendToTarget();
-//                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
+//    @SuppressLint("LongLogTag")
+//    @Override
+//    public void onDecoderResultChanage(String result, String time) {
+//        super.onDecoderResultChanage(result, time);
+//        if(isOnResume){
+//            Log.d(TAG, "onDecoderResultChanage decodeTime=" + time
+//                    + " decodeResult " + result);
+//            HashMap<String, String> hResult = new HashMap<String, String>();
+//            hResult.put("decodeTime", time);
+//            hResult.put("decodeResult", result);
+//            switch (scanMode) {
+//                case com.zltd.decoder.Constants.SINGLE_SHOOT_MODE:
+//                    mHandler.obtainMessage(0, hResult).sendToTarget();
+//                    break;
+//                case com.zltd.decoder.Constants.CONTINUOUS_SHOOT_MODE:
+////                    if(scanCase == STARTCONTINUESHOOT){
+////                        ScanTotalNum++;
+////                        mHandler.obtainMessage(0, hResult).sendToTarget();
+////                    }
+//                    break;
+//                case com.zltd.decoder.Constants.HOLD_SHOOT_MODE:
+////                    if(!isScanTimeOut())
+////                    {
+////                        mHandler.obtainMessage(0, hResult).sendToTarget();
+////                    }
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    }
 
 
 }

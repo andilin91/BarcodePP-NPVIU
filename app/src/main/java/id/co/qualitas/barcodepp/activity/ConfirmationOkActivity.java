@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
+
 public class ConfirmationOkActivity extends BaseActivity {
 
 	private ImageView imgPartial, imgFull;

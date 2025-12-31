@@ -2,7 +2,6 @@ package id.co.qualitas.barcodepp.activity;
 
 import java.util.Map;
 
-import id.co.qualitas.barcodepp.BuildConfig;
 import id.co.qualitas.barcodepp.R;
 import id.co.qualitas.barcodepp.constants.Constants;
 import id.co.qualitas.barcodepp.helper.Helper;
@@ -32,8 +31,8 @@ public class SplashScreenActivity extends Activity {
 		getActionBar().hide();
 		session = new SessionManager(getApplicationContext());
 		TextView txtVersion = findViewById(R.id.txtVersion);
-		String versionName = BuildConfig.VERSION_NAME;
-		txtVersion.setText("NPS PP Version " + versionName);
+//		String versionName = BuildConfig.VERSION_NAME;
+//		txtVersion.setText("NPS PP Version " + versionName);
 		
 		if (session.isUrlEmpty()) {
 			Map<String, String> urlSession = session.getUrl();
